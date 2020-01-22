@@ -91,8 +91,8 @@ conn = sqlite3.connect('rpg_db.sqlite3')
 
 curs = conn.cursor()
 
-query3 = '''SELECT sum(item_id)
-from armory_item;'''
+query3 = '''SELECT COUNT (*)
+FROM armory_item;'''
 
 print('Total Items:')
 print(curs.execute(query3).fetchall())
@@ -105,8 +105,8 @@ conn = sqlite3.connect('rpg_db.sqlite3')
 
 curs = conn.cursor()
 
-query4 = '''SELECT sum(item_ptr_id)
-from armory_weapon;'''
+query4 = '''SELECT COUNT(DISTINCT item_id)FROM armory_item
+WHERE item_id NOT IN (SELECT item_ptr_id FROM armory_weapon);'''
 
 print('Total Weapons:')
 print(curs.execute(query4).fetchall())
@@ -155,4 +155,3 @@ df = pd.read_csv('buddymove_holidayiq.csv')
 conn = sqlite3.connect('buddymove_holidayiq.sqlite3')
 
 df.to_sql('buddymove_holiday', conn)
-
